@@ -1,0 +1,28 @@
+{% extends "shop/base.html" %}
+
+{% block title %} Все сумки {% endblock %}
+
+{% block content %}
+
+
+    <div class="container mt-3">
+        <div class="row">
+            {% for bag in bags %}
+
+                <div class="col-4">
+                    <div class="card">
+
+                        <a href="{% url 'shop:detail' %}">
+                            <img class="bag-img" src="{{ bag.image.url }}" alt="{{ bag.name }}">
+                        </a>
+
+                        <div class="card-body">
+                            {{ bag.name }}
+                        </div>
+                    </div>
+                </div>
+            {% endfor %}
+        </div>
+    </div>
+
+{% endblock %}
