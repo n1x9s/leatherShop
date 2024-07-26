@@ -1,6 +1,17 @@
 {% extends 'base.html' %}
+{% load crispy_forms_filters %}
 
 {% block content %}
 
+    <div class="col-md-10 mx-auto col-lg-5">
+        <form method="post" class="p-4 p-md-5 border rounded-3 bg-body-tertiary">
+            {% csrf_token %}
+            {% load crispy_forms_tags %}
+            {{ form|crispy }}
+            <button class="w-100 btn btn-lg btn-primary" type="submit">Sign up</button>
+            <hr class="my-4">
+            <small class="text-body-secondary">By clicking Sign up, you agree to the terms of use.</small>
+        </form>
+    </div>
 
 {% endblock %}
