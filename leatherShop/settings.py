@@ -42,6 +42,7 @@ INSTALLED_APPS = [
     "personalAccount.apps.PersonalaccountConfig",
     'crispy_forms',
     'crispy_bootstrap5',
+    "homepage.apps.HomepageConfig"
 ]
 
 CRISPY_ALLOWED_TEMPLATE_PACKS = 'bootstrap5'
