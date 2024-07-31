@@ -1,5 +1,6 @@
 from django.shortcuts import render
+from django.views.generic import TemplateView
 
 
-def index(request):
-    return render(request, 'homepage/index.html')
+class Index(TemplateView):
+    template_name = 'homepage/index.html'

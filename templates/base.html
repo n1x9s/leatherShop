@@ -31,8 +31,8 @@
             <li><a href="#" class="nav-link px-2">Pricing</a></li>
             <li><a href="#" class="nav-link px-2">FAQs</a></li>
             <li><a href="#" class="nav-link px-2">About</a></li>
-            {% if request.user.is_authenticated %}
-                <h3>{{ request.user }}</h3>
+            {% if user.is_authenticated %}
+                <h3>{{ user }}</h3>
                 <li><a href="{% url 'personalAccount:signout' %}" class="nav-link px-2">Выйти</a></li>
             {% endif %}
         </ul>

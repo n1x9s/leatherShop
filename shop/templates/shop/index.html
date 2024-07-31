@@ -4,25 +4,27 @@
 
 {% block content %}
 
-    <a href="{% url 'shop:detail' %}">
-        <div class="container mt-3">
-            <div class="row">
-                {% for bag in bags %}
 
-                    <div class="col-4">
-                        <div class="card">
+    <div class="container mt-3">
+        <div class="row">
+            {% for bag in bags %}
 
+                <div class="col-4">
 
-                            <img class="bag-img" src="{{ bag.image.url }}" alt="{{ bag.name }}" width="216px" height="200px">
+                    <div class="card">
+                        <a href="{% url 'shop:detail' bag.pk %}">
+
+                            <img class="bag-img" src="{{ bag.image.url }}" alt="{{ bag.name }}" width="216px"
+                                 height="200px">
 
 
                             <div class="card-body">
                                 {{ bag.name }}
                             </div>
-                        </div>
                     </div>
-                {% endfor %}
-            </div>
+                </div>
+            {% endfor %}
         </div>
+    </div>
     </a>
 {% endblock %}
