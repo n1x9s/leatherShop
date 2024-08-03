@@ -7,12 +7,12 @@ document.addEventListener('DOMContentLoaded', (event) => {
 
     // Apply the saved theme
     htmlElement.setAttribute('data-bs-theme', isDarkTheme ? 'dark' : 'light');
-    themeSwitcher.textContent = isDarkTheme ? 'Switch to Light Theme' : 'Switch to Dark Theme';
+    themeSwitcher.textContent = isDarkTheme ? 'Сменить тему' : 'Сменить тему';
 
     themeSwitcher.addEventListener('click', () => {
         isDarkTheme = !isDarkTheme;
         htmlElement.setAttribute('data-bs-theme', isDarkTheme ? 'dark' : 'light');
-        themeSwitcher.textContent = isDarkTheme ? 'Switch to Light Theme' : 'Switch to Dark Theme';
+        themeSwitcher.textContent = isDarkTheme ? 'Сменить тему' : 'Сменить тему';
 
         // Save the theme choice in localStorage
         localStorage.setItem('isDarkTheme', isDarkTheme);

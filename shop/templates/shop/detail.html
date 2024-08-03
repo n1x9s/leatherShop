@@ -1,5 +1,37 @@
 {% extends 'base.html' %}
 
 {% block content %}
-
-{% endblock%}
+<div class="container mt-5">
+    <div class="row justify-content-center">
+        <div class="col-md-8">
+            <div class="card shadow-sm">
+                <div id="carouselExampleIndicators" class="carousel slide" data-ride="carousel">
+                    <div class="carousel-inner">
+                        {% for image in bag.images.all %}
+                            <div class="carousel-item {% if forloop.first %}active{% endif %}">
+                                <img class="d-block w-100 bag-img" src="{{ image.image.url }}" alt="{{ bag.name }}">
+                            </div>
+                        {% endfor %}
+                    </div>
+                    <a class="carousel-control-prev" href="#carouselExampleIndicators" role="button" data-slide="prev">
+                        <span class="carousel-control-prev-icon" aria-hidden="true"></span>
+                        <span class="sr-only"></span>
+                    </a>
+                    <a class="carousel-control-next" href="#carouselExampleIndicators" role="button" data-slide="next">
+                        <span class="carousel-control-next-icon" aria-hidden="true"></span>
+                        <span class="sr-only"></span>
+                    </a>
+                </div>
+                <div class="card-body">
+                    <h2 class="card-title text-center">{{ bag.name }}</h2>
+                    <p class="card-text">{{ bag.description }}</p>
+                    <div class="d-flex justify-content-between align-items-center mt-4">
+                        <span class="h4">{{ bag.price }} руб.</span>
+                        <button class="btn btn-success">Купить</button>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+{% endblock %}

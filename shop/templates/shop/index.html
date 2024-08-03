@@ -1,30 +1,26 @@
 {% extends "base.html" %}
 
-{% block title %} Все сумки {% endblock %}
+{% block title %}Все сумки{% endblock %}
 
 {% block content %}
-
-
     <div class="container mt-3">
         <div class="row">
             {% for bag in bags %}
-
-                <div class="col-4">
-
-                    <div class="card">
+                <div class="col-12 col-sm-6 col-md-4 mb-4">
+                    <div class="card h-100">
                         <a href="{% url 'shop:detail' bag.pk %}">
-
-                            <img class="bag-img" src="{{ bag.image.url }}" alt="{{ bag.name }}" width="216px"
-                                 height="200px">
-
-
-                            <div class="card-body">
-                                {{ bag.name }}
-                            </div>
+                            {% if bag.images.first %}
+                                <img class="card-img-top bag-img" src="{{ bag.images.first.image.url }}" alt="{{ bag.name }}">
+                            {% else %}
+                                <img class="card-img-top bag-img" src="" alt="Нет изображения">
+                            {% endif %}
+                        </a>
+                        <div class="card-body">
+                            <h5 class="card-title">{{ bag.name }}</h5>
+                        </div>
                     </div>
                 </div>
             {% endfor %}
         </div>
     </div>
-    </a>
 {% endblock %}
