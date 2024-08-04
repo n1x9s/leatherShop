@@ -1,4 +1,7 @@
+from django.contrib.auth.models import User
 from django.db import models
+
+from leatherShop import settings
 
 
 # Create your models here.
@@ -19,3 +22,20 @@ class BagImage(models.Model):
 
     def __str__(self):
         return f"{self.bag.name} Image"
+
+
+class Cart(models.Model):
+    user = models.ForeignKey(User, on_delete=models.CASCADE, null=True, blank=True)  # Используем модель User напрямую
+    created_at = models.DateTimeField(auto_now_add=True)
+
+    def __str__(self):
+        return f"Cart {self.id} for {self.user}"
+
+
+class CartItem(models.Model):
+    cart = models.ForeignKey(Cart, on_delete=models.CASCADE, related_name='items')
+    product = models.ForeignKey(Bag, on_delete=models.CASCADE)
+    quantity = models.PositiveIntegerField(default=1)
+
+    def __str__(self):
+        return f"{self.quantity} of {self.product.name} in cart {self.cart.id}"

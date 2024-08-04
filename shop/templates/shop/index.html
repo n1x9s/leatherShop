@@ -10,13 +10,18 @@
                     <div class="card h-100">
                         <a href="{% url 'shop:detail' bag.pk %}">
                             {% if bag.images.first %}
-                                <img class="card-img-top bag-img" src="{{ bag.images.first.image.url }}" alt="{{ bag.name }}">
+                                <img class="card-img-top bag-img" src="{{ bag.images.first.image.url }}"
+                                     alt="{{ bag.name }}">
                             {% else %}
                                 <img class="card-img-top bag-img" src="" alt="Нет изображения">
                             {% endif %}
                         </a>
                         <div class="card-body">
                             <h5 class="card-title">{{ bag.name }}</h5>
+                            <form method="post" action="{% url 'shop:add_to_cart' bag.pk %}">
+                                {% csrf_token %}
+                                <button type="submit" class="btn btn-link p-0"><i class="bi bi-cart4"></i></button>
+                            </form>
                         </div>
                     </div>
                 </div>

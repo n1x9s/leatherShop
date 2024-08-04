@@ -1,8 +1,8 @@
-from django.contrib.auth.views import LoginView
+from django.contrib.auth.views import LoginView, LogoutView
 from django.shortcuts import render, redirect
 from django.contrib.auth import login, authenticate, logout
 from django.urls import reverse_lazy
-from django.views.generic import CreateView
+from django.views.generic import CreateView, TemplateView
 
 from .forms import SignUpForm, LoginForm
 
@@ -34,6 +34,9 @@ class SignIn(LoginView):
     template_name = 'personalAccount/login.html'
 
 
-def signout(request):
-    logout(request)
-    return redirect('personalAccount:signin')
+class SignOut(LogoutView):
+    next_page = reverse_lazy('personalAccount:signin')
+
+
+class Profile(TemplateView):
+    template_name = 'personalAccount/profile.html'
