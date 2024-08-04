@@ -19,7 +19,8 @@ class Detail(DetailView):
     def get_object(self, queryset=None):
         return get_object_or_404(Bag, pk=self.kwargs['id_bag'])
 
-#test
+
+# test
 def add_to_cart(request, product_id):
     if request.method == 'POST':
         product = get_object_or_404(Bag, id=product_id)
