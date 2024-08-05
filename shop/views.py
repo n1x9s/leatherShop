@@ -1,3 +1,4 @@
+from django.contrib.auth.decorators import login_required
 from django.shortcuts import render, get_object_or_404, redirect
 from django.views.generic import ListView, DetailView
 
@@ -20,7 +21,7 @@ class Detail(DetailView):
         return get_object_or_404(Bag, pk=self.kwargs['id_bag'])
 
 
-# test
+@login_required
 def add_to_cart(request, product_id):
     if request.method == 'POST':
         product = get_object_or_404(Bag, id=product_id)
@@ -30,7 +31,7 @@ def add_to_cart(request, product_id):
         cart_item.save()
         return redirect('shop:cart_detail')
     else:
-        return redirect('shop:bag_list')
+        return redirect('shop:index')
 
 
 def cart_detail(request):
