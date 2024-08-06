@@ -44,6 +44,7 @@ INSTALLED_APPS = [
     'crispy_bootstrap5',
     "homepage.apps.HomepageConfig",
     'rest_framework',
+    "api.apps.ApiConfig"
 ]
 
 REST_FRAMEWORK = {
