@@ -142,3 +142,5 @@ DEFAULT_AUTO_FIELD = 'django.db.models.BigAutoField'
 
 LOGIN_REDIRECT_URL = 'shop:index'
 LOGOUT_REDIRECT_URL = 'shop:index'
+
+LOGIN_URL = 'personalAccount:signin'

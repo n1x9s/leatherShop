@@ -1,8 +1,6 @@
-from django.shortcuts import render
-from shop.models import Bag
 from rest_framework import viewsets
-from rest_framework.permissions import IsAdminUser
 
+from shop.models import Bag
 from .permissions import IsUserAdminOrReadOnly
 from .serializers import BagSerializer
 
