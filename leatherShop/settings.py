@@ -42,8 +42,16 @@ INSTALLED_APPS = [
     "personalAccount.apps.PersonalaccountConfig",
     'crispy_forms',
     'crispy_bootstrap5',
-    "homepage.apps.HomepageConfig"
+    "homepage.apps.HomepageConfig",
+    'rest_framework',
 ]
+
+REST_FRAMEWORK = {
+    'DEFAULT_RENDERER_CLASSES': (
+        'rest_framework.renderers.JSONRenderer',
+        'rest_framework.renderers.BrowsableAPIRenderer',
+    )
+}
 
 CRISPY_ALLOWED_TEMPLATE_PACKS = 'bootstrap5'
 CRISPY_TEMPLATE_PACK = 'bootstrap5'
