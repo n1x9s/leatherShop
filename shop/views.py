@@ -1,7 +1,7 @@
 from django.contrib.auth.decorators import login_required
 from django.shortcuts import render, get_object_or_404, redirect
 from django.views.generic import ListView, DetailView
-from rest_framework import generics
+from rest_framework import generics, viewsets
 
 from .models import Bag, Cart, CartItem
 from .serializers import BagSerializer
@@ -64,12 +64,7 @@ def remove_all_from_cart(request, item_id):
         return redirect('shop:cart_detail')
 
 
-class BagAPIView(generics.ListAPIView):
-    queryset = Bag.objects.all()
-    serializer_class = BagSerializer
-
-
-class BagDetailAPIView(generics.RetrieveUpdateDestroyAPIView):
+class BagViewSet(viewsets.ModelViewSet):
     queryset = Bag.objects.all()
     serializer_class = BagSerializer
 
