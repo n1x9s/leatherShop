@@ -7,21 +7,46 @@
         <div class="row">
             {% for bag in bags %}
                 <div class="col-12 col-sm-6 col-md-4 mb-4">
-                    <div class="card h-100">
+                    <div class="card shadow-sm h-100">
                         <a href="{% url 'shop:detail' bag.pk %}">
                             {% if bag.images.first %}
                                 <img class="card-img-top bag-img" src="{{ bag.images.first.image.url }}"
-                                     alt="{{ bag.name }}">
+                                     alt="{{ bag.name }}" width="100%" height="225">
                             {% else %}
-                                <img class="card-img-top bag-img" src="" alt="Нет изображения">
+                                <svg class="bd-placeholder-img card-img-top" width="100%" height="225"
+                                     xmlns="http://www.w3.org/2000/svg" role="img" aria-label="Placeholder: Thumbnail"
+                                     preserveAspectRatio="xMidYMid slice" focusable="false">
+                                    <rect width="100%" height="100%" fill="#55595c"></rect>
+                                    <text x="50%" y="50%" fill="#eceeef" dy=".3em">Нет изображения</text>
+                                </svg>
                             {% endif %}
                         </a>
                         <div class="card-body">
                             <h5 class="card-title">{{ bag.name }}</h5>
-                            <form method="post" action="{% url 'shop:add_to_cart' bag.pk %}">
-                                {% csrf_token %}
-                                <button type="submit" class="btn btn-link p-0"><i class="bi bi-cart4"></i></button>
-                            </form>
+                            <p class="card-text bag-description">{{ bag.description }}</p>
+                            <div class="d-flex justify-content-between align-items-center">
+                                <div class="btn-group">
+                                    {% if bag.discount == 0 %}
+                                        <button type="button"
+                                                class="btn btn-sm btn-outline-secondary">{{ bag.price }} ₽
+                                        </button>
+                                    {% else %}
+                                        <button type="button"
+                                                class="btn btn-sm btn-outline-secondary"
+                                                style="text-decoration: line-through;">{{ bag.price }} ₽
+                                        </button>
+                                        <button type="button"
+                                                class="btn btn-sm btn-outline-secondary">{{ bag.discounted_price }} ₽
+                                        </button>
+                                    {% endif %}
+                                </div>
+                                <form method="post" action="{% url 'shop:add_to_cart' bag.pk %}" class="ms-2">
+                                    {% csrf_token %}
+                                    <button type="submit" class="btn btn-sm btn-outline-secondary">
+                                        <i class="bi bi-cart4"></i>
+                                    </button>
+                                </form>
+                            </div>
                         </div>
                     </div>
                 </div>

@@ -23,11 +23,11 @@
                                 <p class="card-text">Количество: {{ item.quantity}}</p>
                                 <form method="post" action="{% url 'shop:remove_item_from_cart' item.pk %}">
                                     {% csrf_token %}
-                                    <button type="submit" class="btn btn-warning">Удалить один</button>
+                                    <button type="submit" class="btn btn-outline-warning">Удалить одну</button>
                                 </form>
                                 <form method="post" action="{% url 'shop:remove_all_from_cart' item.pk %}">
                                     {% csrf_token %}
-                                    <button type="submit" class="btn btn-danger">Удалить все</button>
+                                    <button type="submit" class="btn btn-outline-danger">Удалить все</button>
                                 </form>
                             </div>
                         </div>

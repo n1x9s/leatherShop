@@ -5,9 +5,6 @@ from django.views.generic import ListView, DetailView
 from .models import Bag, Cart, CartItem
 
 
-# Create your views here.
-
-
 class Index(ListView):
     template_name = 'shop/index.html'
     context_object_name = 'bags'

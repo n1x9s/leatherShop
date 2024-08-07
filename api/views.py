@@ -8,4 +8,4 @@ from .serializers import BagSerializer
 class BagViewSet(viewsets.ModelViewSet):
     queryset = Bag.objects.all()
     serializer_class = BagSerializer
-    permission_classes = (IsUserAdminOrReadOnly,)
+    permission_classes = [IsUserAdminOrReadOnly]

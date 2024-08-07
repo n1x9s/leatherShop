@@ -11,6 +11,10 @@ class Bag(models.Model):
     name = models.CharField('Название сумки', max_length=200)
     description = models.CharField('Описание', max_length=500)
     price = models.IntegerField('Цена')
+    discount = models.PositiveSmallIntegerField('Скидка', default=0)
+
+    def discounted_price(self):
+        return self.price * (100 - self.discount) / 100
 
     def __str__(self):
         return self.name
