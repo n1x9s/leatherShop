@@ -26,7 +26,12 @@
                     <h2 class="card-title text-center">{{ bag.name }}</h2>
                     <p class="card-text">{{ bag.description }}</p>
                     <div class="d-flex justify-content-between align-items-center mt-4">
-                        <span class="h4">{{ bag.price }} руб.</span>
+                        {% if bag.discount == 0 %}
+                            <span class="h4 text-success">{{ bag.price }} руб.</span>
+                        {% else %}
+                            <span class="h4 text-danger" style="text-decoration: line-through;">{{ bag.price }} руб.</span>
+                            <span class="h4 text-success">{{ bag.discounted_price }} руб.</span>
+                        {% endif %}
                         <button class="btn btn-success">Купить</button>
                     </div>
                 </div>

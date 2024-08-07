@@ -1,6 +1,7 @@
 from django.contrib.auth.decorators import login_required
 from django.shortcuts import render, get_object_or_404, redirect
 from django.views.generic import ListView, DetailView
+from django.db.models import Q
 
 from .models import Bag, Cart, CartItem
 
@@ -57,3 +58,12 @@ def remove_all_from_cart(request, item_id):
         return redirect('shop:cart_detail')
     else:
         return redirect('shop:cart_detail')
+
+
+def search(request):
+    query = request.GET.get('q')
+    if query:
+        bags = Bag.objects.filter(Q(name__icontains=query) | Q(description__icontains=query))
+    else:
+        bags = Bag.objects.all()
+    return render(request, 'shop/search_results.html', {'bags': bags, 'query': query})

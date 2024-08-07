@@ -93,7 +93,7 @@
             border-color: #bd2130;
         }
 
-        .bi-cart {
+        .bi-heart {
             font-size: 2rem;
             color: var(--icon-color);
         }
@@ -120,7 +120,10 @@
             <li><a href="{% url 'shop:index' %}" class="nav-link px-2">Сумки</a></li>
             <button id="theme-switcher" class="btn btn-outline-secondary">Сменить тему</button>
         </ul>
-
+        <form class="d-flex" method="get" action="{% url 'shop:search' %}">
+            <input class="form-control me-2" type="search" placeholder="Поиск" aria-label="Search" name="q">
+            <button class="btn btn-outline-success" type="submit">Найти</button>
+        </form>
         <div class="col-md-3 text-end">
             {% if not user.is_authenticated %}
                 <a href="{% url 'personalAccount:signin' %}">
@@ -132,7 +135,7 @@
             {% endif %}
             {% if user.is_authenticated %}
                 <a href="{% url 'shop:cart_detail' %}" class="text-decoration-none">
-                    <i class="bi bi-cart"></i>
+                    <i class="bi bi-heart"></i>
                 </a>
 
                 <form method="post" action="{% url 'personalAccount:signout' %}" class="d-inline">
