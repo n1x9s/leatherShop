@@ -11,6 +11,30 @@ class Index(ListView):
     context_object_name = 'bags'
     model = Bag
 
+    def get_queryset(self):
+        queryset = super().get_queryset()
+
+        # Фильтрация по скидке
+        if self.request.GET.get('discount'):
+            queryset = queryset.filter(discount__gt=0)
+
+        # Сортировка по цене
+        price_order = self.request.GET.get('price_order')
+        if price_order == 'price_asc':
+            queryset = queryset.order_by('price')
+        elif price_order == 'price_desc':
+            queryset = queryset.order_by('-price')
+
+        return queryset
+
+    def get_context_data(self, **kwargs):
+        context = super().get_context_data(**kwargs)
+        context['selected_filter'] = {
+            'discount': self.request.GET.get('discount', ''),
+            'price_order': self.request.GET.get('price_order', '')
+        }
+        return context
+
 
 class Detail(DetailView):
     template_name = 'shop/detail.html'

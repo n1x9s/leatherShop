@@ -4,6 +4,34 @@
 
 {% block content %}
     <div class="container mt-3">
+        <div class="row mb-3">
+            <div class="col-12">
+                <div class="dropdown">
+                    <button class="btn btn-secondary dropdown-toggle" type="button" data-bs-toggle="dropdown" aria-expanded="false">
+                        Сортировать по
+                    </button>
+                    <div class="dropdown-menu p-3">
+                        <form method="get" id="filterForm">
+                            <div class="form-check">
+                                <input class="form-check-input" type="checkbox" id="discount" name="discount" value="1" {% if request.GET.discount %}checked{% endif %}>
+                                <label class="form-check-label" for="discount">Товары со скидкой</label>
+                            </div>
+                            <hr>
+                            <div class="form-check">
+                                <input class="form-check-input" type="radio" id="price_asc" name="price_order" value="price_asc" {% if request.GET.price_order == 'price_asc' %}checked{% endif %}>
+                                <label class="form-check-label" for="price_asc">От меньшей цены к большей</label>
+                            </div>
+                            <div class="form-check">
+                                <input class="form-check-input" type="radio" id="price_desc" name="price_order" value="price_desc" {% if request.GET.price_order == 'price_desc' %}checked{% endif %}>
+                                <label class="form-check-label" for="price_desc">От большей цены к меньшей</label>
+                            </div>
+                            <button type="submit" class="btn btn-primary mt-2">Применить</button>
+                            <a href="{% url 'shop:index' %}" class="btn btn-secondary mt-2">Сбросить</a>
+                        </form>
+                    </div>
+                </div>
+            </div>
+        </div>
         <div class="row">
             {% for bag in bags %}
                 <div class="col-12 col-sm-6 col-md-4 mb-4">
@@ -36,13 +64,13 @@
                                                 style="text-decoration: line-through;">{{ bag.price }} ₽
                                         </button>
                                         <button type="button"
-                                                class="btn btn-sm btn-outline-secondary">{{ bag.discounted_price }} ₽
+                                                class="btn btn-sm btn-outline-primary">{{ bag.discounted_price }} ₽
                                         </button>
                                     {% endif %}
                                 </div>
                                 <form method="post" action="{% url 'shop:add_to_cart' bag.pk %}" class="ms-2">
                                     {% csrf_token %}
-                                    <button type="submit" class="btn btn-sm btn-outline-secondary">
+                                    <button type="submit" class="btn btn-sm btn-outline-danger">
                                         <i class="bi bi-heart-fill"></i>
                                     </button>
                                 </form>
