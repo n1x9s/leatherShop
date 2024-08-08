@@ -10,15 +10,16 @@ class Index(ListView):
     template_name = 'shop/index.html'
     context_object_name = 'bags'
     model = Bag
+    paginate_by = 6
 
     def get_queryset(self):
         queryset = super().get_queryset()
 
-        # Фильтрация по скидке
+
         if self.request.GET.get('discount'):
             queryset = queryset.filter(discount__gt=0)
 
-        # Сортировка по цене
+
         price_order = self.request.GET.get('price_order')
         if price_order == 'price_asc':
             queryset = queryset.order_by('price')
