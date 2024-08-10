@@ -15,10 +15,8 @@ class Index(ListView):
     def get_queryset(self):
         queryset = super().get_queryset()
 
-
         if self.request.GET.get('discount'):
             queryset = queryset.filter(discount__gt=0)
-
 
         price_order = self.request.GET.get('price_order')
         if price_order == 'price_asc':
@@ -92,3 +90,9 @@ def search(request):
     else:
         bags = Bag.objects.all()
     return render(request, 'shop/search_results.html', {'bags': bags, 'query': query})
+
+
+''' 
+Цели:
+сделать оплату
+'''
