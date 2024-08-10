@@ -32,7 +32,9 @@
                             <span class="h4 text-danger" style="text-decoration: line-through;">{{ bag.price }} руб.</span>
                             <span class="h4 text-success">{{ bag.discounted_price }} руб.</span>
                         {% endif %}
-                        <button class="btn btn-success">Купить</button>
+                    </div>
+                    <div class="text-center mt-4">
+                        <a href="{% url 'shop:order_bag' bag.id %}" class="btn btn-primary btn-lg">Заказать</a>
                     </div>
                 </div>
             </div>

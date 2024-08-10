@@ -3,7 +3,8 @@ from django.shortcuts import render, get_object_or_404, redirect
 from django.views.generic import ListView, DetailView
 from django.db.models import Q
 
-from .models import Bag, Cart, CartItem
+from .models import Bag, Cart, CartItem, Order, OrderItem
+from .forms import OrderForm
 
 
 class Index(ListView):
@@ -92,7 +93,31 @@ def search(request):
     return render(request, 'shop/search_results.html', {'bags': bags, 'query': query})
 
 
-''' 
-Цели:
-сделать оплату
-'''
+@login_required
+def order_bag(request, product_id):
+    product = get_object_or_404(Bag, id=product_id)
+
+    if request.method == 'POST':
+        form = OrderForm(request.POST)
+        if form.is_valid():
+            order = form.save(commit=False)
+            order.user = request.user
+            order.save()
+
+            OrderItem.objects.create(
+                order=order,
+                product=product,
+                quantity=1
+            )
+
+            return redirect('shop:order_success', order_id=order.id)
+    else:
+        form = OrderForm()
+
+    return render(request, 'shop/order_form.html', {'form': form, 'product': product})
+
+
+@login_required
+def order_success(request, order_id):
+    order = get_object_or_404(Order, id=order_id)
+    return render(request, 'shop/order_success.html', {'order': order})
