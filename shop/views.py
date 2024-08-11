@@ -1,11 +1,11 @@
-from django.contrib.auth.decorators import login_required
+from django.contrib.auth.decorators import login_required, user_passes_test
 from django.contrib.postgres.search import SearchVector, SearchQuery, SearchRank
 from django.shortcuts import render, get_object_or_404, redirect
 from django.views.generic import ListView, DetailView
 from django.db.models import Q
 
 from .models import Bag, Cart, CartItem, Order, OrderItem
-from .forms import OrderForm
+from .forms import OrderForm, BagForm, BagImageForm
 
 
 class Index(ListView):
@@ -122,3 +122,46 @@ def order_bag(request, product_id):
 def order_success(request, order_id):
     order = get_object_or_404(Order, id=order_id)
     return render(request, 'shop/order_success.html', {'order': order})
+
+
+def is_admin(user):
+    return user.is_staff
+
+
+@user_passes_test(is_admin)
+def admin_bag_list(request):
+    bags = Bag.objects.all()
+    return render(request, 'shop/admin_bag_list.html', {'bags': bags})
+
+
+@user_passes_test(is_admin)
+def admin_bag_edit(request, bag_id=None):
+    if bag_id:
+        bag = get_object_or_404(Bag, id=bag_id)
+    else:
+        bag = Bag()
+
+    if request.method == 'POST':
+        form = BagForm(request.POST, instance=bag)
+        if form.is_valid():
+            bag = form.save()
+            image_form = BagImageForm(request.POST, request.FILES)
+            if image_form.is_valid():
+                image_instance = image_form.save(commit=False)
+                image_instance.bag = bag
+                image_instance.save()
+            return redirect('shop:admin_bag_list')
+    else:
+        form = BagForm(instance=bag)
+        image_form = BagImageForm()
+
+    return render(request, 'shop/admin_bag_edit.html', {'form': form, 'image_form': image_form})
+
+
+@user_passes_test(is_admin)
+def admin_bag_delete(request, bag_id):
+    bag = get_object_or_404(Bag, id=bag_id)
+    if request.method == 'POST':
+        bag.delete()
+        return redirect('shop:admin_bag_list')
+    return render(request, 'shop/admin_bag_delete_confirm.html', {'bag': bag})

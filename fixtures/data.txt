@@ -1,0 +1,2 @@
+python manage.py dumpdata shop.Bag > .\fixtures\bag\Bag.json
+python manage.py loaddata fixtures\bag

@@ -1,0 +1,14 @@
+{% extends 'base.html' %}
+
+{% block content %}
+<div class="container mt-4">
+    <h1 class="mb-4">Удаление товара</h1>
+    <p>Вы уверены, что хотите удалить товар <strong>"{{ bag.name }}"</strong>?</p>
+    
+    <form method="post">
+        {% csrf_token %}
+        <button class="btn btn-danger" type="submit">Удалить</button>
+        <a href="{% url 'shop:admin_bag_list' %}" class="btn btn-secondary">Отмена</a>
+    </form>
+</div>
+{% endblock %}

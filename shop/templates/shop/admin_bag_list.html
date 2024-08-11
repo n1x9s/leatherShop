@@ -1,0 +1,32 @@
+{% extends 'base.html' %}
+
+{% block content %}
+<div class="container mt-4">
+    <h1 class="mb-4">Управление товарами</h1>
+    <a href="{% url 'shop:admin_bag_edit' %}" class="btn btn-primary mb-3">Добавить новый товар</a>
+    
+    <table class="table table-striped">
+        <thead>
+            <tr>
+                <th>Название</th>
+                <th>Цена</th>
+                <th>Скидка</th>
+                <th>Действия</th>
+            </tr>
+        </thead>
+        <tbody>
+            {% for bag in bags %}
+            <tr>
+                <td>{{ bag.name }}</td>
+                <td>{{ bag.price }} руб.</td>
+                <td>{{ bag.discount }}%</td>
+                <td>
+                    <a href="{% url 'shop:admin_bag_edit' bag.id %}" class="btn btn-sm btn-warning">Редактировать</a>
+                    <a href="{% url 'shop:admin_bag_delete' bag.id %}" class="btn btn-sm btn-danger">Удалить</a>
+                </td>
+            </tr>
+            {% endfor %}
+        </tbody>
+    </table>
+</div>
+{% endblock %}

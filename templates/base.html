@@ -105,18 +105,21 @@
 
 <div class="container">
     <header class="d-flex flex-wrap align-items-center justify-content-center justify-content-md-between py-3 mb-4 border-bottom">
-
-
         <ul class="nav col-12 col-md-auto mb-2 justify-content-center mb-md-0">
             <li><a href="{% url 'homepage:homepage' %}" class="nav-link px-2">Главная</a></li>
             <li><a href="{% url 'shop:index' %}" class="nav-link px-2">Сумки</a></li>
-            
         </ul>
+
         <form class="d-flex" method="get" action="{% url 'shop:search' %}">
             <input class="form-control me-2" type="search" placeholder="Поиск" aria-label="Search" name="q">
             <button class="btn btn-outline-success" type="submit">Найти</button>
         </form>
+
         <div class="col-md-3 text-end">
+            {% if user.is_staff %}
+                <a href="{% url 'shop:admin_bag_list' %}" class="btn btn-success me-2">Список товаров</a>
+            {% endif %}
+
             {% if not user.is_authenticated %}
                 <a href="{% url 'personalAccount:signin' %}">
                     <button type="button" class="btn btn-outline-primary me-2">Вход</button>
@@ -125,6 +128,7 @@
                     <button type="button" class="btn btn-primary">Регистрация</button>
                 </a>
             {% endif %}
+
             {% if user.is_authenticated %}
                 <a href="{% url 'shop:cart_detail' %}" class="text-decoration-none">
                     <i class="bi bi-heart"></i>
@@ -138,6 +142,7 @@
         </div>
     </header>
 </div>
+
 
 {# main block #}
 {% block content %}
