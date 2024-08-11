@@ -5,7 +5,7 @@ from django.views.generic import ListView, DetailView
 from django.db.models import Q
 
 from .models import Bag, Cart, CartItem, Order, OrderItem
-from .forms import OrderForm, BagForm, BagImageForm
+from .forms import OrderForm, BagForm
 
 
 class Index(ListView):
@@ -144,18 +144,12 @@ def admin_bag_edit(request, bag_id=None):
     if request.method == 'POST':
         form = BagForm(request.POST, instance=bag)
         if form.is_valid():
-            bag = form.save()
-            image_form = BagImageForm(request.POST, request.FILES)
-            if image_form.is_valid():
-                image_instance = image_form.save(commit=False)
-                image_instance.bag = bag
-                image_instance.save()
+            form.save()
             return redirect('shop:admin_bag_list')
     else:
         form = BagForm(instance=bag)
-        image_form = BagImageForm()
 
-    return render(request, 'shop/admin_bag_edit.html', {'form': form, 'image_form': image_form})
+    return render(request, 'shop/admin_bag_edit.html', {'form': form})
 
 
 @user_passes_test(is_admin)

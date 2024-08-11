@@ -4,18 +4,11 @@
 <div class="container mt-4">
     <h1 class="mb-4">{% if form.instance.pk %}Редактировать товар{% else %}Добавить новый товар{% endif %}</h1>
     
-    <form method="post" enctype="multipart/form-data">
+    <form method="post">
         {% csrf_token %}
         {{ form.as_p }}
         <button class="btn btn-success" type="submit">Сохранить</button>
         <a href="{% url 'shop:admin_bag_list' %}" class="btn btn-secondary">Назад к списку товаров</a>
-    </form>
-
-    <h2 class="mt-4">Добавить изображение</h2>
-    <form method="post" enctype="multipart/form-data">
-        {% csrf_token %}
-        {{ image_form.as_p }}
-        <button class="btn btn-primary" type="submit">Добавить изображение</button>
     </form>
 </div>
 {% endblock %}
