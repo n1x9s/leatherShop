@@ -17,5 +17,6 @@ urlpatterns = [
     path('admin/bags/edit/<int:bag_id>/', views.admin_bag_edit, name='admin_bag_edit'),
     path('admin/bags/edit/', views.admin_bag_edit, name='admin_bag_edit'),
     path('admin/bags/delete/<int:bag_id>/', views.admin_bag_delete, name='admin_bag_delete'),
-
+    path('admin/panel/', views.admin_panel, name='admin_panel'),
+    path('admin/orders/', views.admin_order_list, name='admin_order_list'),
 ]

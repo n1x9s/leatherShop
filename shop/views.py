@@ -1,5 +1,4 @@
 from django.contrib.auth.decorators import login_required, user_passes_test
-from django.contrib.postgres.search import SearchVector, SearchQuery, SearchRank
 from django.shortcuts import render, get_object_or_404, redirect
 from django.views.generic import ListView, DetailView
 from django.db.models import Q
@@ -129,6 +128,11 @@ def is_admin(user):
 
 
 @user_passes_test(is_admin)
+def admin_panel(request):
+    return render(request, 'shop/admin_panel.html')
+
+
+@user_passes_test(is_admin)
 def admin_bag_list(request):
     bags = Bag.objects.all()
     return render(request, 'shop/admin_bag_list.html', {'bags': bags})
@@ -159,3 +163,9 @@ def admin_bag_delete(request, bag_id):
         bag.delete()
         return redirect('shop:admin_bag_list')
     return render(request, 'shop/admin_bag_delete_confirm.html', {'bag': bag})
+
+
+@user_passes_test(is_admin)
+def admin_order_list(request):
+    orders = Order.objects.all()
+    return render(request, 'shop/admin_order_list.html', {'orders': orders})

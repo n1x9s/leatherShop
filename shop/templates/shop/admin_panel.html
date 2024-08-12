@@ -1,0 +1,13 @@
+{% extends 'base.html' %}
+
+{% block content %}
+<div class="container mt-4">
+    <h1 class="mb-4">Админ панель</h1>
+    <ul>
+        <li><a href="{% url 'shop:admin_bag_list' %}"><button class="btn btn-primary">Управление товарами</button></a></li>
+        <li></li>
+        <li><a href="{% url 'shop:admin_order_list' %}"><button class="btn btn-primary">Управление заказами</button></a></li>
+    </ul>
+
+</div>
+{% endblock %}

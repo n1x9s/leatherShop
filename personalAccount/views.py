@@ -28,6 +28,11 @@ class SignUp(CreateView):
     template_name = 'personalAccount/register.html'
     success_url = reverse_lazy('shop:index')
 
+    def form_valid(self, form):
+        user = form.save()
+        login(self.request, user)
+        return redirect(self.success_url)
+
 
 class SignIn(LoginView):
     form_class = LoginForm

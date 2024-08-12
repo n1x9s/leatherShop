@@ -117,7 +117,7 @@
 
         <div class="col-md-3 text-end">
             {% if user.is_staff %}
-                <a href="{% url 'shop:admin_bag_list' %}" class="btn btn-success me-2">Список товаров</a>
+                <a href="{% url 'shop:admin_panel' %}" class="btn btn-success me-2">Админ Панель</a>
             {% endif %}
 
             {% if not user.is_authenticated %}
