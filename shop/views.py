@@ -56,12 +56,17 @@ def add_to_cart(request, product_id):
         return redirect('shop:index')
 
 
+@login_required
 def cart_detail(request):
     cart, created = Cart.objects.get_or_create(user=request.user)
     cart_items = CartItem.objects.filter(cart=cart)
-    return render(request, 'shop/cart_detail.html', {'cart_items': cart_items})
+
+    total_sum = sum(item.product.discounted_price() * item.quantity for item in cart_items)
+
+    return render(request, 'shop/cart_detail.html', {'cart_items': cart_items, 'total_sum': total_sum})
 
 
+@login_required
 def remove_item_from_cart(request, item_id):
     if request.method == 'POST':
         cart_item = get_object_or_404(CartItem, id=item_id)
@@ -75,6 +80,7 @@ def remove_item_from_cart(request, item_id):
         return redirect('shop:cart_detail')
 
 
+@login_required
 def remove_all_from_cart(request, item_id):
     if request.method == 'POST':
         cart_item = get_object_or_404(CartItem, id=item_id)
@@ -87,15 +93,16 @@ def remove_all_from_cart(request, item_id):
 def search(request):
     query = request.GET.get('q')
     if query:
-        bags = Bag.objects.filter(Q(name__icontains=query) | Q(description__icontains=query))
+        bags = Bag.objects.filter(Q(name__icontains=query) | Q(description__icontains(query)))
     else:
         bags = Bag.objects.all()
     return render(request, 'shop/search_results.html', {'bags': bags, 'query': query})
 
 
 @login_required
-def order_bag(request, product_id):
-    product = get_object_or_404(Bag, id=product_id)
+def order_form(request):
+    cart, created = Cart.objects.get_or_create(user=request.user)
+    cart_items = CartItem.objects.filter(cart=cart)
 
     if request.method == 'POST':
         form = OrderForm(request.POST)
@@ -104,17 +111,21 @@ def order_bag(request, product_id):
             order.user = request.user
             order.save()
 
-            OrderItem.objects.create(
-                order=order,
-                product=product,
-                quantity=1
-            )
+            for item in cart_items:
+                OrderItem.objects.create(
+                    order=order,
+                    product=item.product,
+                    quantity=item.quantity
+                )
 
+            cart_items.delete()  # Очищаем корзину после оформления заказа
             return redirect('shop:order_success', order_id=order.id)
     else:
         form = OrderForm()
 
-    return render(request, 'shop/order_form.html', {'form': form, 'product': product})
+    total_sum = sum(item.product.discounted_price() * item.quantity for item in cart_items)
+
+    return render(request, 'shop/order_form.html', {'form': form, 'total_sum': total_sum})
 
 
 @login_required
