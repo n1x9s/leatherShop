@@ -19,4 +19,7 @@ urlpatterns = [
     path('admin/bags/delete/<int:bag_id>/', views.admin_bag_delete, name='admin_bag_delete'),
     path('admin/panel/', views.admin_panel, name='admin_panel'),
     path('admin/orders/', views.admin_order_list, name='admin_order_list'),
+    path('profile/', views.profile_view, name='profile'),
+    path('my-orders/', views.user_orders, name='user_orders'),
+    path('my-orders/<int:order_id>/', views.user_order_detail, name='user_order_detail'),
 ]

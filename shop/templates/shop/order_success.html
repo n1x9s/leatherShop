@@ -1,3 +1,6 @@
+{% extends 'base.html' %}
+{% block content %}
 <h2>Заказ успешно оформлен!</h2>
 <p>Спасибо за ваш заказ, {{ order.name }}!</p>
 <p>Мы отправим его по адресу: {{ order.address }}</p>
+{% endblock %}

@@ -1,0 +1,33 @@
+{% extends 'base.html' %}
+
+{% block title %}Мои заказы{% endblock %}
+
+{% block content %}
+<div class="container py-5">
+    <h2>Мои заказы</h2>
+    {% if orders_with_totals %}
+    <table class="table table-bordered table-striped">
+        <thead>
+            <tr>
+                <th>ID заказа</th>
+                <th>Дата заказа</th>
+                <th>Сумма</th>
+                <th>Детали</th>
+            </tr>
+        </thead>
+        <tbody>
+            {% for item in orders_with_totals %}
+            <tr>
+                <td>{{ item.order.id }}</td>
+                <td>{{ item.order.created_at|date:"d.m.Y H:i" }}</td>
+                <td>{{ item.total_sum|floatformat:2 }} ₽</td>
+                <td><a href="{% url 'shop:user_order_detail' item.order.id %}">Подробнее</a></td>
+            </tr>
+            {% endfor %}
+        </tbody>
+    </table>
+    {% else %}
+    <p>У вас нет заказов.</p>
+    {% endif %}
+</div>
+{% endblock %}

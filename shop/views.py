@@ -44,6 +44,15 @@ class Detail(DetailView):
 
 
 @login_required
+def profile_view(request):
+    user_orders = Order.objects.filter(user=request.user).order_by('-created_at')
+    user_cart = Cart.objects.get(user=request.user)
+
+    return render(request, 'personalAccount/profile.html', {'user_orders': user_orders, 'user_cart': user_cart})
+
+
+
+@login_required
 def add_to_cart(request, product_id):
     if request.method == 'POST':
         product = get_object_or_404(Bag, id=product_id)
@@ -180,3 +189,24 @@ def admin_bag_delete(request, bag_id):
 def admin_order_list(request):
     orders = Order.objects.all()
     return render(request, 'shop/admin_order_list.html', {'orders': orders})
+
+
+@login_required
+def user_orders(request):
+    orders = Order.objects.filter(user=request.user).prefetch_related('items__product').order_by('-created_at')
+
+    orders_with_totals = []
+    for order in orders:
+        total_sum = sum(item.product.discounted_price() * item.quantity for item in order.items.all())
+        orders_with_totals.append({'order': order, 'total_sum': total_sum})
+
+    return render(request, 'shop/user_orders.html', {'orders_with_totals': orders_with_totals})
+
+
+
+
+@login_required
+def user_order_detail(request, order_id):
+    order = get_object_or_404(Order, id=order_id, user=request.user)
+    total_sum = sum(item.product.discounted_price() * item.quantity for item in order.items.all())
+    return render(request, 'shop/user_order_detail.html', {'order': order, 'total_sum': total_sum})
