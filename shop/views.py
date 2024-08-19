@@ -102,7 +102,7 @@ def remove_all_from_cart(request, item_id):
 def search(request):
     query = request.GET.get('q')
     if query:
-        bags = Bag.objects.filter(Q(name__icontains=query) | Q(description__icontains(query)))
+        bags = Bag.objects.filter(Q(name__icontains=query))
     else:
         bags = Bag.objects.all()
     return render(request, 'shop/search_results.html', {'bags': bags, 'query': query})
@@ -127,7 +127,7 @@ def order_form(request):
                     quantity=item.quantity
                 )
 
-            cart_items.delete()  # Очищаем корзину после оформления заказа
+            cart_items.delete()
             return redirect('shop:order_success', order_id=order.id)
     else:
         form = OrderForm()
