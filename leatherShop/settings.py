@@ -94,11 +94,11 @@ WSGI_APPLICATION = 'leatherShop.wsgi.application'
 DATABASES = {
     'default': {
         'ENGINE': 'django.db.backends.postgresql',
-        'NAME': os.getenv('POSTGRES_DB', 'leathershop'),
-        'USER': os.getenv('POSTGRES_USER', 'postgres'),
-        'PASSWORD': os.getenv('POSTGRES_PASSWORD', '15931'),
-        'HOST': os.getenv('POSTGRES_HOST', 'db'),
-        'PORT': os.getenv('POSTGRES_PORT', '5432'),
+        'NAME': 'leathershop',
+        'USER': 'postgres',
+        'PASSWORD': '15931',
+        'HOST': 'localhost',
+        'PORT': '5432',
     }
 }
 
